@@ -45,8 +45,18 @@ namespace Parsers.Models
             if (response == true)
             {
                 string filepth = ofd.FileName;
-
                 Path = filepth;
+            }
+            return Path;
+        }
+
+        public string DropFile(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string filename = files[0];
+                Path = filename;
             }
             return Path;
         }

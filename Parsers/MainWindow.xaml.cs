@@ -68,15 +68,5 @@ namespace Parsers
         {
             Application.Current.MainWindow.Close();
         }
-
-        private void TextBox_Path_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                string filename = files[0];
-                TextBox_Path.Text = filename;
-            }
-        }
     }
 }

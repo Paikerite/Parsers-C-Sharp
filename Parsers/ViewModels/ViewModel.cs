@@ -36,23 +36,6 @@ namespace Parsers.ViewModels
             set { content.Path = value; OnPropertyChange(nameof(Path)); }
         }
 
-        //private RelayCommand readFCommand;
-        //public RelayCommand ReadFCommand
-        //{
-        //    get { return readFCommand ??= new RelayCommand(obj =>
-        //            {
-        //                if (!string.IsNullOrEmpty(Path))
-        //                {
-        //                    string text = File.ReadAllText(Path);
-        //                    Result = text;
-        //                }
-        //                else
-        //                {
-        //                    MessageBox.Show("File directory is empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //                }
-        //            });}
-        //}
-
         //ReadAndParseFile
         private RelayCommand readFCommand;
         public RelayCommand ReadFCommand
@@ -71,6 +54,18 @@ namespace Parsers.ViewModels
                 return browseFCommand ??= new RelayCommand(obj =>
                 {
                     Path = content.BtnClickBrowse();
+                });
+            }
+        }
+
+        private RelayCommand dropFCommand;
+        public RelayCommand DropFCommand
+        { 
+            get 
+            { 
+                return dropFCommand ??= new RelayCommand(obj => 
+                {
+                    Path = content.DropFile((DragEventArgs)obj);
                 });
             }
         }

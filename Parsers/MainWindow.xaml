@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Parsers.ViewModels"
         mc:Ignorable="d"
         Title="Parsers" Height="600" Width="400" Background="#FF393E41" MinWidth="320" MinHeight="230" FontFamily="Microsoft JhengHei UI Light" WindowStyle="None" AllowsTransparency="True" SnapsToDevicePixels="True" ResizeMode="CanResizeWithGrip">
@@ -33,7 +34,13 @@
                 <Button Content="Start" Foreground="#f6f7eb" Background="#e94f37" VerticalAlignment="Center" Margin="0,0,0,5" HorizontalAlignment="Stretch" x:Name="btnStart" Command="{Binding ReadFCommand}"/>
             </StackPanel>
         </Grid>
-        <Border Grid.Row="3" BorderBrush="#e94f37" BorderThickness="2" Drop="TextBox_Path_Drop" AllowDrop="True">
+        <Border Grid.Row="3" BorderBrush="#e94f37" BorderThickness="2" AllowDrop="True">
+            <!--Drop="TextBox_Path_Drop">-->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Drop">
+                    <i:InvokeCommandAction Command="{Binding DropFCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TextBox Text="{Binding Result}" Name="TextBox_Output" TextWrapping="Wrap" Grid.Row="3" Margin="3,3,3,3" IsReadOnly="True" Background="#f6f7eb"/>
         </Border>
     </Grid>
