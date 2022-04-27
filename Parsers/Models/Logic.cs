@@ -12,22 +12,54 @@ namespace Parsers.Models
 {
     sealed class Content
     {
+        // Main variables
         public string Result { get; set; }
 
         public string Path { get; set; }
-        //public string LastName { get; set; }
 
-        //public DateTime BirthDate { get; set; }
+        // Filter variables
+
+        public bool TakeItems { get; set; }
+
+        public bool OrderByRatings { get; set; }
+
+        public bool WhereBirthYearMore { get; set; }
+
+        // Functions
+
         public string ReadAndParseFile(string Path)
         {
+            //Result = String.Empty;
             if (!string.IsNullOrEmpty(Path))
             {
-                IEnumerable<ChessPlayer> list = File.ReadAllLines(Path)
-                    .Skip(1)
-                    .Select(ChessPlayer.ParseFileChessPlayer)
-                    //.Where(player => player.BirthYear > 1980)
-                    .OrderBy(player => player.Ratings);
-                    //.Take(10);
+                IEnumerable<ChessPlayer> list;
+                if (TakeItems)
+                {
+                    list = File.ReadAllLines(Path)
+                        .Skip(1)
+                        .Select(ChessPlayer.ParseFileChessPlayer)
+                        .Take(10);
+                }
+                else if (OrderByRatings)
+                {
+                    list = File.ReadAllLines(Path)
+                        .Skip(1)
+                        .Select(ChessPlayer.ParseFileChessPlayer)
+                        .OrderBy(player => player.Ratings);
+                }
+                else if (WhereBirthYearMore)
+                {
+                    list = File.ReadAllLines(Path)
+                        .Skip(1)
+                        .Select(ChessPlayer.ParseFileChessPlayer)
+                        .Where(player => player.BirthYear >= 1980);
+                }
+                else
+                {
+                    list = File.ReadAllLines(Path)
+                        .Skip(1)
+                        .Select(ChessPlayer.ParseFileChessPlayer);
+                }
                 Result = string.Join("\n", list);
             }
             else

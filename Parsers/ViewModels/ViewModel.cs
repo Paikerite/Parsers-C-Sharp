@@ -20,8 +20,29 @@ namespace Parsers.ViewModels
             content = new Content
             {
                 Result = "",
-                Path = ""
+                Path = "",
+                TakeItems = false,
+                OrderByRatings = false,
+                WhereBirthYearMore = false,
             };
+        }
+
+        public bool TakeItems
+        {
+            get { return content.TakeItems; }
+            set { content.TakeItems = value; OnPropertyChange(nameof(TakeItems)); }
+        }
+
+        public bool OrderByRatings
+        {
+            get { return content.OrderByRatings; }
+            set { content.OrderByRatings = value; OnPropertyChange(nameof(OrderByRatings)); }
+        }
+
+        public bool WhereBirthYearMore
+        {
+            get { return content.WhereBirthYearMore; }
+            set { content.WhereBirthYearMore = value; OnPropertyChange(nameof(WhereBirthYearMore)); }
         }
 
         public string Result
@@ -36,6 +57,7 @@ namespace Parsers.ViewModels
             set { content.Path = value; OnPropertyChange(nameof(Path)); }
         }
 
+        //Functions and Commands
         //ReadAndParseFile
         private RelayCommand readFCommand;
         public RelayCommand ReadFCommand

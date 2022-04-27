@@ -22,21 +22,11 @@ namespace Parsers
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private readonly ViewModel _viewModel;
-        //private DataGrid _dataGrid;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new ViewModel();
-            // The DataContext serves as the starting point of Binding Paths
-            //DataContext = _viewModel;
-            //_dataGrid.CollectionChanged += DataGrid_CollectionChanged;
-        }
-
-        private void DataGrid_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            //Do what ever
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

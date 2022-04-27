@@ -6,12 +6,18 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:Parsers.ViewModels"
         mc:Ignorable="d"
-        Title="Parsers" Height="600" Width="400" Background="#FF393E41" MinWidth="320" MinHeight="230" FontFamily="Microsoft JhengHei UI Light" WindowStyle="None" AllowsTransparency="True" SnapsToDevicePixels="True" ResizeMode="CanResizeWithGrip">
+        Title="Parsers" Height="600" Width="400" Background="#FF393E41" MinWidth="320" MinHeight="230" FontFamily="Microsoft JhengHei UI Light" WindowStyle="None" AllowsTransparency="True" SnapsToDevicePixels="True" ResizeMode="CanResizeWithGrip"
+        AllowDrop="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Drop">
+            <i:InvokeCommandAction Command="{Binding DropFCommand}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="100"/>
-            <RowDefinition/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Border BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Background="#e94f37" MouseDown="Border_MouseDown">
             <Grid>
@@ -28,19 +34,22 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="TextBox_Path" Text="{Binding Path, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" IsReadOnly="True"/>
+            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox Name="TextBox_Path" Text="{Binding Path, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" IsReadOnly="True"/>
+                <GroupBox Height="40" Header="Filter by:" BorderBrush="#e94f37" BorderThickness="1" Foreground="#f6f7eb" Margin="3,0,3,5">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton Content="Take 10" Foreground="#f6f7eb" Margin="3,0,3,0" IsChecked="{Binding TakeItems, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton Content="Order by Ratings" Foreground="#f6f7eb" Margin="3,0,3,0" IsChecked="{Binding OrderByRatings, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton Content="Where birth year >1980" Foreground="#f6f7eb" Margin="3,0,3,0" IsChecked="{Binding WhereBirthYearMore, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Button Content="Browse" Foreground="#f6f7eb" Background="#e94f37" VerticalAlignment="Center" Margin="0,0,0,5" HorizontalAlignment="Stretch" x:Name="btnBrowse" Command="{Binding BrowseFCommand}"/>
                 <Button Content="Start" Foreground="#f6f7eb" Background="#e94f37" VerticalAlignment="Center" Margin="0,0,0,5" HorizontalAlignment="Stretch" x:Name="btnStart" Command="{Binding ReadFCommand}"/>
             </StackPanel>
         </Grid>
-        <Border Grid.Row="3" BorderBrush="#e94f37" BorderThickness="2" AllowDrop="True">
-            <!--Drop="TextBox_Path_Drop">-->
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Drop">
-                    <i:InvokeCommandAction Command="{Binding DropFCommand}" PassEventArgsToCommand="True"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+        <Border Grid.Row="3" BorderBrush="#e94f37" BorderThickness="2">
             <TextBox Text="{Binding Result}" Name="TextBox_Output" TextWrapping="Wrap" Grid.Row="3" Margin="3,3,3,3" IsReadOnly="True" Background="#f6f7eb"/>
         </Border>
     </Grid>
